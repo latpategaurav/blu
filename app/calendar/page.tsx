@@ -158,67 +158,67 @@ export default function CalendarPage() {
                           </div>
                           {/* Main image and hover images */}
                           <motion.div
-                            className={`relative flex items-start h-[300px] group/calendar-row ${isBooked ? 'pointer-events-none' : ''}`}
+                            className={`relative flex items-start h-[300px] group/calendar-row overflow-hidden ${isBooked ? 'pointer-events-none' : ''}`}
                             onMouseEnter={() => !isMobile && !isBooked && setHoveredDay(i)}
                             onMouseLeave={() => !isMobile && setHoveredDay(null)}
-                            style={{
-                              width: hoveredDay === i && !isBooked && !isMobile ? 750.5 : 476.5,
-                              justifyContent: 'flex-end',
-                              marginLeft: 'auto',
-                              position: 'relative',
-                            }}
+                            style={{ width: 476.5, justifyContent: 'flex-end' }}
                             animate={isBooked ? { scale: 1.01, boxShadow: '0 0 16px #DC1E1E33' } : {}}
                             transition={{ duration: 0.2 }}
                           >
-                            {/* Main image: right-aligned by default, slides left on hover */}
-                            <motion.div
-                              layout
-                              initial={false}
-                              animate={{ x: hoveredDay === i && !isBooked && !isMobile ? -340 : 0 }}
-                              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                              className="w-[476.5px] h-[300px] relative z-10"
-                              style={{ borderRadius: 0, marginLeft: 'auto' }}
-                            >
-                              <Image
-                                src={moodboard.coverImageUrl}
-                                alt={moodboard.name}
-                                fill
-                                className="object-cover w-full h-full rounded"
-                              />
-                              {/* Booked overlay: Disney+ logo */}
-                              {isBooked && (
-                                <div className="absolute inset-0 flex items-center justify-center bg-black/30 z-20">
-                                  <Image src="/disney-logo.png" alt="Disney+" width={120} height={120} className="opacity-90" />
-                                </div>
-                              )}
-                            </motion.div>
-                            {/* Hover: show two more images to the left of the main image (desktop only, unbooked) */}
-                            <AnimatePresence>
-                              {hoveredDay === i && !isBooked && !isMobile && (
-                                <motion.div
-                                  initial={{ opacity: 0 }}
-                                  animate={{ opacity: 1 }}
-                                  exit={{ opacity: 0 }}
-                                  transition={{ duration: 0.3 }}
-                                  className="flex flex-row gap-[10px] absolute top-0 right-[476.5px] h-full z-20"
-                                >
+                            {/* All images in the same container */}
+                            <div className="flex flex-row gap-[10px] h-full relative">
+                              {/* Main image: right-aligned by default, slides left on hover */}
+                              <motion.div
+                                layout
+                                initial={false}
+                                animate={{ x: hoveredDay === i && !isBooked && !isMobile ? -340 : 0 }}
+                                transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                                className="w-[476.5px] h-[300px] relative z-10 flex-shrink-0"
+                                style={{ borderRadius: 0 }}
+                              >
+                                <Image
+                                  src={moodboard.coverImageUrl}
+                                  alt={moodboard.name}
+                                  fill
+                                  className="object-cover w-full h-full rounded"
+                                />
+                                {/* Booked overlay: Disney+ logo */}
+                                {isBooked && (
+                                  <div className="absolute inset-0 flex items-center justify-center bg-black/30 z-20">
+                                    <Image src="/disney-logo.png" alt="Disney+" width={120} height={120} className="opacity-90" />
+                                  </div>
+                                )}
+                              </motion.div>
+                              
+                              {/* Similar images: always present but hidden until hover */}
+                              <motion.div
+                                className="flex flex-row gap-[10px] h-full"
+                                initial={{ opacity: 0, x: 0 }}
+                                animate={{ 
+                                  opacity: hoveredDay === i && !isBooked && !isMobile ? 1 : 0,
+                                  x: hoveredDay === i && !isBooked && !isMobile ? 0 : 20
+                                }}
+                                transition={{ duration: 0.3, ease: "easeOut" }}
+                              >
+                                <div className="w-[330px] h-[300px] relative flex-shrink-0">
                                   <Image
                                     src={similarImages[0]}
                                     alt={moodboard.name + ' alt 1'}
-                                    width={330}
-                                    height={300}
+                                    fill
                                     className="object-cover rounded h-full"
                                   />
+                                </div>
+                                <div className="w-[330px] h-[300px] relative flex-shrink-0">
                                   <Image
                                     src={similarImages[1]}
                                     alt={moodboard.name + ' alt 2'}
-                                    width={330}
-                                    height={300}
+                                    fill
                                     className="object-cover rounded h-full"
                                   />
-                                </motion.div>
-                              )}
-                            </AnimatePresence>
+                                </div>
+                              </motion.div>
+                            </div>
+                            
                             {/* Clickable overlay for available moodboards */}
                             {!isBooked && hoveredDay === i && !isMobile && (
                               <Link href={`/moodboard/${moodboard.id}`} className="absolute inset-0 z-30" />

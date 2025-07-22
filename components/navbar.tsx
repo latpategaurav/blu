@@ -23,6 +23,7 @@ const navItems = [
   { label: 'Shoot Calendar', href: '/calendar' },
   { label: 'Discover', href: '/discover' },
   { label: 'About Us', href: '/about-us' },
+  { label: 'Contact Us', href: '/contact' }, // Added Contact Us
 ]
 
 interface NavbarProps {

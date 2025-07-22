@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import crypto from 'crypto'
 import { createClient } from '@/lib/supabase/server'
+import { sendEmail } from '@/lib/utils/email'
 
 export async function POST(request: NextRequest) {
   try {
@@ -105,6 +106,36 @@ async function handlePaymentCaptured(payment: any, supabase: any) {
 
     if (bookingError) {
       console.error('Failed to update booking from webhook:', bookingError)
+    }
+
+    // Fetch booking and client details for email
+    const { data: booking } = await supabase
+      .from('bookings')
+      .select('id, booking_date, product_count, total_amount, deposit_amount, client:profiles(email, name), moodboard:moodboards(title), model:models(name)')
+      .eq('id', paymentRecord.booking_id)
+      .single()
+
+    if (booking?.client?.email) {
+      const subject = 'Your Space Called Blu Booking is Confirmed!';
+      const html = `
+        <h2>Booking Confirmed</h2>
+        <p>Hi ${booking.client.name || 'there'},</p>
+        <p>Your booking is confirmed. Here are your details:</p>
+        <ul>
+          <li><strong>Moodboard:</strong> ${booking.moodboard?.title || 'N/A'}</li>
+          <li><strong>Model:</strong> ${booking.model?.name || 'N/A'}</li>
+          <li><strong>Booking Date:</strong> ${new Date(booking.booking_date).toLocaleDateString()}</li>
+          <li><strong>Product Count:</strong> ${booking.product_count}</li>
+          <li><strong>Total Amount:</strong> ₹${booking.total_amount?.toLocaleString()}</li>
+          <li><strong>Deposit Paid:</strong> ₹${booking.deposit_amount?.toLocaleString()}</li>
+        </ul>
+        <p>We look forward to seeing you at Space Called Blu!</p>
+      `;
+      await sendEmail({
+        to: booking.client.email,
+        subject,
+        html,
+      });
     }
 
     // TODO: Send confirmation SMS via Twilio

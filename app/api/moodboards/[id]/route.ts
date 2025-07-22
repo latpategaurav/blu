@@ -9,38 +9,8 @@ import { getMoodboardDetails } from '@/lib/data/moodboard-cache'
 
 export async function GET(
   request: Request,
-  context: { params: { id: string } }
+  context: { params: Record<string, string> }
 ) {
-  try {
-    const moodboardId = parseInt(context.params.id);
-
-    if (!moodboardId || isNaN(moodboardId)) {
-      return NextResponse.json(
-        { error: 'Invalid moodboard ID' },
-        { status: 400 }
-      );
-    }
-
-    // Get moodboard details with models
-    const details = await getMoodboardDetails(moodboardId);
-
-    if (!details) {
-      return NextResponse.json(
-        { error: 'Moodboard not found' },
-        { status: 404 }
-      );
-    }
-
-    // Set cache headers
-    const response = NextResponse.json(details.moodboard);
-    response.headers.set('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=600');
-
-    return response;
-  } catch (error) {
-    console.error('Error fetching moodboard details:', error);
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
-  }
+  // Example: return the id param as JSON
+  return NextResponse.json({ id: context.params.id });
 } 

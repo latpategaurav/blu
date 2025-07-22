@@ -24,7 +24,7 @@ export default function AdminModelsPage() {
     agency: '',
     ratePerDay: '',
     available: true,
-    images: [],
+    images: [] as string[],
   });
   const [imageFiles, setImageFiles] = useState<File[]>([]);
 
@@ -80,7 +80,7 @@ export default function AdminModelsPage() {
       for (const file of imageFiles) {
         const { data, error } = await supabase.storage.from('model-portfolios').upload(`public/${Date.now()}-${file.name}`, file);
         if (!error && data) {
-          const url = supabase.storage.from('model-portfolios').getPublicUrl(data.path).publicUrl;
+          const url = supabase.storage.from('model-portfolios').getPublicUrl(data.path).data.publicUrl;
           uploadedImages.push(url);
         }
       }

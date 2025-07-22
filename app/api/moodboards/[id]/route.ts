@@ -9,10 +9,10 @@ import { getMoodboardDetails } from '@/lib/data/moodboard-cache'
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
-    const moodboardId = parseInt(params.id)
+    const moodboardId = parseInt(context.params.id)
     
     if (!moodboardId || isNaN(moodboardId)) {
       return NextResponse.json(

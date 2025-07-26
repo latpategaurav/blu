@@ -36,8 +36,12 @@ export const metadata: Metadata = {
     title: '303030 - Mood Board Booking Platform',
     description: 'Book transparent, theme-based photoshoots with curated mood boards',
   },
-  viewport: 'width=device-width, initial-scale=1',
   robots: 'index, follow',
+}
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
 }
 
 /**

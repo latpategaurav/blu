@@ -8,7 +8,6 @@ import Image from 'next/image';
 export default function HomePage() {
   return (
     <main className="font-sans text-[18px] md:text-[20px]">
-      <Header />
       <HeroSection />
       <ReserveSection />
       <FeaturedSection title="Featured Themes & Shoots" />
@@ -21,31 +20,17 @@ export default function HomePage() {
   );
 }
 
-// Header Component
-function Header() {
-  return (
-    <header className="flex justify-between items-start p-6 border-b">
-      <div className="text-2xl font-bold">303030</div>
-      <nav className="space-x-4 text-sm text-right">
-        <Link href="/calendar" className="hover:underline">Shoot Calendar</Link>
-        <Link href="/discover" className="hover:underline">Discover</Link>
-        <Link href="/about-us" className="hover:underline">About Us</Link>
-        <Link href="/login" className="hover:underline">Login</Link>
-        <Link href="/signup" className="hover:underline">Signup</Link>
-      </nav>
-    </header>
-  );
-}
+
 
 // Hero Section
 function HeroSection() {
   return (
-    <section className="text-center py-16 px-4">
-      <h1 className="text-4xl font-bold mb-4">Shoot with Blu</h1>
-      <p className="max-w-2xl mx-auto text-sm text-gray-600 mb-12">
+    <section className="text-center py-8 md:py-16 px-4">
+      <h1 className="text-3xl md:text-4xl font-bold mb-4">Shoot with Blu</h1>
+      <p className="max-w-2xl mx-auto text-sm md:text-base text-gray-600 mb-8 md:mb-12">
         Set within a light-filled industrial loft with exposed brick walls, soaring ceilings, curated backdrops and custom lighting rigs inspired by the stories we're there to tell. Space Called Blu is built to immerse you in the craft. Whether it's a portrait session, a fashion shoot, or a future expedition, you'll have full access to our styling zone, gear library and on-site creative suite—everything you need to collaborate, experiment and refine every frame until it feels unmistakably yours.
       </p>
-      <div className="bg-gray-100 rounded-lg h-96 flex items-center justify-center">
+      <div className="bg-gray-100 h-64 md:h-96 flex items-center justify-center">
         <span className="text-4xl">📹 ▶️</span>
       </div>
     </section>
@@ -55,10 +40,10 @@ function HeroSection() {
 // Reserve Section
 function ReserveSection() {
   return (
-    <section className="text-center py-12">
-      <h2 className="text-xl font-semibold mb-6">Reserve your shot →</h2>
-      <div className="grid grid-cols-2 gap-6 px-12">
-        <div className="relative h-80 overflow-hidden">
+    <section className="text-center py-8 md:py-12">
+      <h2 className="text-lg md:text-xl font-semibold mb-4 md:mb-6">Reserve your shot →</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 px-4 md:px-12">
+        <div className="relative h-60 md:h-80 overflow-hidden">
           <Image
             src="https://images.unsplash.com/photo-1515372039744-b8f02a3ae446"
             alt="Minimal Studio"
@@ -66,7 +51,7 @@ function ReserveSection() {
             style={{ objectFit: 'cover' }}
           />
         </div>
-        <div className="relative h-80 overflow-hidden">
+        <div className="relative h-60 md:h-80 overflow-hidden">
           <Image
             src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32"
             alt="Clean Portrait"
@@ -105,63 +90,63 @@ function FeaturedSection({ title }: { title: string }) {
   ];
 
   return (
-    <section className="px-6 py-10">
-      <h2 className="text-xl font-bold mb-8">{title}</h2>
+    <section className="px-4 md:px-6 py-8 md:py-10">
+      <h2 className="text-lg md:text-xl font-bold mb-6 md:mb-8">{title}</h2>
       <div className="grid grid-cols-4 gap-4">
         <div className="flex flex-col">
           <div className="relative h-96 overflow-hidden">
             <Image
-              src="/moodboards/5_MinimalistStudio.jpeg"
-              alt="Minimalist Studio"
+              src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f"
+              alt="Fashion City"
               fill
               style={{ objectFit: 'cover' }}
             />
           </div>
           <div className="p-4">
-            <h3 className="text-lg font-semibold mb-1">Minimalist Studio</h3>
-            <p className="text-sm text-gray-600">Clean, modern studio look</p>
+            <h3 className="text-lg font-semibold mb-1">Fashion City</h3>
+            <p className="text-sm text-gray-600">Urban editorial shoot</p>
           </div>
         </div>
         <div className="flex flex-col">
           <div className="relative h-96 overflow-hidden">
             <Image
-              src="/moodboards/14_AngelsThesis.jpeg"
-              alt="Angel's Thesis"
+              src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308"
+              alt="Studio Minimal"
               fill
               style={{ objectFit: 'cover' }}
             />
           </div>
           <div className="p-4">
-            <h3 className="text-lg font-semibold mb-1">Angel's Thesis</h3>
-            <p className="text-sm text-gray-600">Ethereal, dreamy shoot</p>
+            <h3 className="text-lg font-semibold mb-1">Studio Minimal</h3>
+            <p className="text-sm text-gray-600">Clean studio portrait</p>
           </div>
         </div>
         <div className="flex flex-col">
           <div className="relative h-96 overflow-hidden">
             <Image
-              src="/moodboards/16_AdreanKing.jpeg"
-              alt="Adrean King"
+              src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e"
+              alt="Soft Outdoor"
               fill
               style={{ objectFit: 'cover' }}
             />
           </div>
           <div className="p-4">
-            <h3 className="text-lg font-semibold mb-1">Adrean King</h3>
-            <p className="text-sm text-gray-600">Bold, editorial portrait</p>
+            <h3 className="text-lg font-semibold mb-1">Soft Outdoor</h3>
+            <p className="text-sm text-gray-600">Natural light, soft tones</p>
           </div>
         </div>
         <div className="flex flex-col">
           <div className="relative h-96 overflow-hidden">
             <Image
-              src="/moodboards/29_EthGradient.jpeg"
-              alt="Eth Gradient"
+              src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c"
+              alt="Editorial Urban"
               fill
               style={{ objectFit: 'cover' }}
             />
           </div>
           <div className="p-4">
-            <h3 className="text-lg font-semibold mb-1">Eth Gradient</h3>
-            <p className="text-sm text-gray-600">Colorful, gradient-inspired</p>
+            <h3 className="text-lg font-semibold mb-1">Editorial Urban</h3>
+            <p className="text-sm text-gray-600">Street style editorial</p>
           </div>
         </div>
       </div>
@@ -172,9 +157,9 @@ function FeaturedSection({ title }: { title: string }) {
 // Our Work Section
 function OurWorkSection() {
   return (
-    <section className="grid grid-cols-2 gap-6 px-6 py-10">
-      <div className="grid grid-cols-3 gap-4">
-        <div className="relative h-64 overflow-hidden">
+    <section className="grid grid-cols-1 md:grid-cols-2 gap-6 px-4 md:px-6 py-8 md:py-10">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="relative h-48 md:h-64 overflow-hidden">
           <Image
             src="/moodboards/26_LightTrack.jpeg"
             alt="Light Track"
@@ -182,7 +167,7 @@ function OurWorkSection() {
             style={{ objectFit: 'cover', objectPosition: 'center 30%' }}
           />
         </div>
-        <div className="relative h-64 overflow-hidden">
+        <div className="relative h-48 md:h-64 overflow-hidden">
           <Image
             src="/moodboards/pietro maximoff aesthetic.jpeg"
             alt="Pietro Maximoff Aesthetic"
@@ -192,8 +177,8 @@ function OurWorkSection() {
         </div>
       </div>
       <div className="flex flex-col justify-center">
-        <h2 className="text-4xl font-bold mb-2">Our Work</h2>
-        <p className="text-xl text-gray-600">
+        <h2 className="text-xl md:text-2xl font-bold mb-2">Our Work</h2>
+        <p className="text-sm md:text-base text-gray-600">
           Explore our portfolio of premium photography sessions and creative collaborations with brands and models.
         </p>
       </div>
@@ -235,22 +220,22 @@ function GalleryGrid() {
 
   // Grid layout configuration - 4x2 matrix (now with E+F combined)
   const gridItems = [
-    { img: '/moodboards/Screenshot 2025-06-01 114330.png', colStart: 1, colEnd: 2, rowStart: 1, rowEnd: 3, className: 'h-full' }, // A
-    { img: '/moodboards/2_WhispersOfSpring.png', colStart: 2, colEnd: 3, rowStart: 1, rowEnd: 2, className: 'aspect-square min-h-[12rem]' }, // B
-    { img: '/moodboards/1_Sunny.png', colStart: 3, colEnd: 4, rowStart: 1, rowEnd: 2, className: 'aspect-square min-h-[12rem]' }, // C
-    { img: '/moodboards/Screenshot 2025-06-01 114216.png', colStart: 4, colEnd: 5, rowStart: 1, rowEnd: 3, className: 'h-full' }, // D
-    { img: '/moodboards/10_RetroAutumn.jpeg', colStart: 2, colEnd: 4, rowStart: 2, rowEnd: 3, className: 'aspect-[2/1] min-h-[12rem]' }, // E+F combined, wide box
+    { img: '/moodboards/Screenshot 2025-06-01 114330.png', colStart: 1, colEnd: 2, rowStart: 1, rowEnd: 3, className: 'h-full', link: '/cyber-moodboard' }, // A
+    { img: '/moodboards/2_WhispersOfSpring.png', colStart: 2, colEnd: 3, rowStart: 1, rowEnd: 2, className: 'aspect-square min-h-[12rem]', link: '/whispers-spring' }, // B
+    { img: '/moodboards/1_Sunny.png', colStart: 3, colEnd: 4, rowStart: 1, rowEnd: 2, className: 'aspect-square min-h-[12rem]', link: '/cyber-moodboard' }, // C
+    { img: '/moodboards/Screenshot 2025-06-01 114216.png', colStart: 4, colEnd: 5, rowStart: 1, rowEnd: 3, className: 'h-full', link: '/red-moodboard' }, // D
+    { img: '/moodboards/10_RetroAutumn.jpeg', colStart: 2, colEnd: 4, rowStart: 2, rowEnd: 3, className: 'aspect-[2/1] min-h-[12rem]', link: '/whispers-spring' }, // E+F combined, wide box
   ];
 
   return (
-    <section className="px-6 grid grid-cols-4 gap-2 py-10">
+    <section className="px-4 md:px-6 grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4 py-8 md:py-10">
       {gridItems.map((item, i) => {
         const isHovered = hoveredIndex === i;
         const isAnyHovered = hoveredIndex !== null;
         return (
           <motion.div
             key={i}
-            className={`relative ${item.className} rounded cursor-pointer flex items-center justify-center transition-all duration-300 text-2xl font-bold select-none overflow-hidden ${
+            className={`relative ${item.className} cursor-pointer flex items-center justify-center transition-all duration-300 text-2xl font-bold select-none overflow-hidden ${
               isHovered ? 'ring-4 ring-yellow-300 shadow-xl z-10' : ''
             }`}
             style={{
@@ -265,14 +250,16 @@ function GalleryGrid() {
             }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
           >
-            <Image
-              src={item.img}
-              alt={`Grid item ${i + 1}`}
-              fill
-              style={{ objectFit: 'cover' }}
-            />
+            <Link href={item.link} className="w-full h-full">
+              <Image
+                src={item.img}
+                alt={`Grid item ${i + 1}`}
+                fill
+                style={{ objectFit: 'cover' }}
+              />
+            </Link>
             {isAnyHovered && !isHovered && (
-              <div className="absolute inset-0 bg-white/50 rounded"></div>
+              <div className="absolute inset-0 bg-white/50"></div>
             )}
           </motion.div>
         );
@@ -289,13 +276,13 @@ function ShootCards() {
     { title: 'Vintage Revival Lookbook', subtitle: 'Retro Brands Co.' }
   ];
   return (
-    <section className="grid grid-cols-3 gap-6 px-6 py-10">
+    <section className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 px-4 md:px-6 py-8 md:py-10">
       {shoots.map((s, i) => (
-        <div key={i} className="bg-white rounded-lg shadow p-4">
-          <div className="bg-gray-300 h-48 mb-4 rounded" />
-          <h3 className="text-lg font-semibold">{s.title}</h3>
-          <p className="text-sm text-gray-500">{s.subtitle}</p>
-          <div className="text-right text-xs mt-2 bg-gray-100 px-2 py-1 inline-block rounded">2024</div>
+        <div key={i} className="bg-white shadow p-4">
+          <div className="bg-gray-300 h-32 md:h-48 mb-4"></div>
+          <h3 className="text-base md:text-lg font-semibold">{s.title}</h3>
+          <p className="text-xs md:text-sm text-gray-500">{s.subtitle}</p>
+          <div className="text-right text-xs mt-2 bg-gray-100 px-2 py-1 inline-block">2024</div>
         </div>
       ))}
     </section>
@@ -305,7 +292,7 @@ function ShootCards() {
 // Final Call to Action
 function FinalCTA() {
   return (
-    <footer className="flex justify-between items-center px-6 py-10 text-sm text-gray-600">
+    <footer className="flex flex-col md:flex-row justify-between items-center px-6 py-10 text-sm text-gray-600">
       <ul className="list-disc ml-4 space-y-1">
         <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
         <li>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</li>

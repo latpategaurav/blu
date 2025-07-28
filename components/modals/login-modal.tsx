@@ -125,8 +125,15 @@ export function LoginModal({ isOpen, onClose, callbackUrl = '/calendar' }: Login
         // Authentication successful - user is now logged in
         toast.success('Authentication successful!')
         onClose()
-        router.push(callbackUrl)
-        router.refresh()
+        
+        // Use router.push for internal navigation, preserve current domain
+        if (callbackUrl.startsWith('/')) {
+          router.push(callbackUrl)
+          router.refresh()
+        } else {
+          // For external URLs, use window.location to preserve domain
+          window.location.href = callbackUrl
+        }
       } else {
         setError('Authentication failed. Please try again.')
       }

@@ -9,6 +9,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import { Toaster } from 'react-hot-toast'
 import { ModalProvider } from '@/components/providers/modal-provider'
+import { Header } from '@/components/header'
 
 // Configure Inter font with Latin subset
 // Inter provides clean, modern typography perfect for minimalist design
@@ -61,6 +62,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ModalProvider />
+        {/* Global Header */}
+        <Header />
         {/* Main application content */}
         {children}
         

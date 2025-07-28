@@ -59,8 +59,10 @@ export async function middleware(request: NextRequest) {
 
   // Redirect to home if accessing protected route without authentication
   if (!session) {
+    // Preserve the original host and protocol when redirecting
     const url = request.nextUrl.clone()
     url.pathname = '/'
+    // Keep the original host instead of defaulting to localhost:3000
     return NextResponse.redirect(url)
   }
 

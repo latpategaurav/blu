@@ -21,11 +21,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Navbar } from '@/components/navbar'
 import Image from 'next/image'
 import Link from 'next/link'
 import { format } from 'date-fns'
 import moodboardsData from '@/data/moodboards.json'
+import ShootCard from '@/components/ui/shoot-card'
 
 // Define the moodboard type based on JSON structure
 interface Moodboard {
@@ -123,7 +123,7 @@ export default function DiscoverPage() {
   if (loading) {
     return (
       <>
-        <Navbar />
+        {/* <Navbar /> */}
         <div className="min-h-screen pt-20 px-6">
           <div className="max-w-7xl mx-auto">
             <div className="animate-pulse space-y-4">
@@ -142,10 +142,48 @@ export default function DiscoverPage() {
 
   return (
     <>
-      <Navbar />
-      
-      <div className="min-h-screen pt-20 px-6 pb-12 bg-white">
-        <div className="max-w-7xl mx-auto">
+      <div className="min-h-screen px-6 pb-12 bg-white">
+        <div className="w-full">
+          {/* Booking Dashboard Header */}
+          <div className="mb-12 p-8 rounded-lg">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+              {/* Left side - Title and Description */}
+              <div>
+                <h1 className="text-4xl font-bold text-black mb-2">Booking Dashboard</h1>
+                <p className="text-gray-600">Browse and book your next photo session.</p>
+              </div>
+              
+              {/* Right side - Calendar Navigation */}
+              <div className="flex items-center space-x-4 mt-4 md:mt-0">
+                <div className="flex items-center space-x-2">
+                  <button className="p-2 hover:bg-gray-100 rounded-md transition-colors">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    </svg>
+                  </button>
+                  <span className="font-bold text-black">May 2025</span>
+                  <button className="p-2 hover:bg-gray-100 rounded-md transition-colors">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+            {/* Legend */}
+            <div className="flex items-center space-x-6">
+              <div className="flex items-center space-x-2">
+                <div className="w-5 h-5 bg-black"></div>
+                <span className="text-sm text-gray-600">Available Shoot</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <div className="w-5 h-5 bg-red-500"></div>
+                <span className="text-sm text-gray-600">Booked By Other</span>
+              </div>
+            </div>
+          </div>
+
           {/* Page Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -154,7 +192,7 @@ export default function DiscoverPage() {
             className="text-center mb-12"
           >
             {/* Logo */}
-            <div className="flex justify-center mb-8">
+            {/* <div className="flex justify-center mb-8">
               <Image
                 src="/30logo.png"
                 alt="303030 Logo"
@@ -163,12 +201,9 @@ export default function DiscoverPage() {
                 style={{ objectFit: 'contain' }}
                 priority
               />
-            </div>
+            </div> */}
             
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 text-black">Discover</h1>
-            <p className="text-xl text-zinc-600 max-w-3xl mx-auto">
-              Explore our curated collection of mood boards and find the perfect aesthetic for your next photo session
-            </p>
+            
           </motion.div>
 
           {/* Filters and Search Bar */}
@@ -229,152 +264,59 @@ export default function DiscoverPage() {
           </div>
 
           {/* Results Count */}
-          <p className="text-sm text-zinc-600 mb-8">
-            Showing {filteredMoodboards.length} of {moodboards.length} mood boards
-          </p>
+          {/* <p className="text-sm text-zinc-600 mb-8">
+            Showing {Math.min(filteredMoodboards.length, 30)} of {moodboards.length} mood boards
+          </p> */}
 
           {/* Moodboards Grid */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 w-full"
           >
-            {filteredMoodboards.map((moodboard, index) => (
-              <motion.div
-                key={moodboard.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.05 }}
-              >
-                {canClickMoodboard(moodboard) ? (
-                  <Link href={`/moodboard/${moodboard.id}`}>
-                    <Card className="group cursor-pointer hover:shadow-xl transition-all duration-300 overflow-hidden">
-                      {/* Moodboard Image */}
-                      <div className="relative aspect-[4/5] bg-zinc-100 overflow-hidden">
-                        <Image
-                          src={moodboard.coverImageUrl}
-                          alt={moodboard.name}
-                          fill
-                          className="object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
-                        
-                        {/* Available indicator */}
-                        <div className="absolute top-3 right-3 bg-green-500 text-white text-xs px-2 py-1 rounded-full font-medium">
-                          Available
-                        </div>
-                        
-                        {/* Main/Similar indicator */}
-                        <div className="absolute top-3 left-3">
-                          <Badge variant={moodboard.is_main_moodboard ? "default" : "secondary"} className="text-xs">
-                            {moodboard.is_main_moodboard ? "Main" : "Similar"}
-                          </Badge>
-                        </div>
-                        
-                        {/* Date Badge */}
-                        <div className="absolute bottom-3 left-3">
-                          <Badge variant="outline" className="text-xs bg-white/90">
-                            {format(new Date(moodboard.date), 'MMM d')}
-                          </Badge>
-                        </div>
-                      </div>
-                      
-                      {/* Moodboard Details */}
-                      <div className="p-4">
-                        <h3 className="font-bold text-lg mb-2 group-hover:text-zinc-700 transition-colors">
-                          {moodboard.name}
-                        </h3>
-                        
-                        {/* Description */}
-                        <p className="text-sm text-zinc-600 mb-3 line-clamp-2">
-                          {moodboard.description}
-                        </p>
-                        
-                        {/* Tags */}
-                        <div className="flex flex-wrap gap-1 mb-3">
-                          {moodboard.themeTags.slice(0, 3).map((tag, i) => (
-                            <Badge key={i} variant="secondary" className="text-xs">
-                              {tag}
-                            </Badge>
-                          ))}
-                          {moodboard.themeTags.length > 3 && (
-                            <Badge variant="outline" className="text-xs">
-                              +{moodboard.themeTags.length - 3}
-                            </Badge>
-                          )}
-                        </div>
-                        
-                        {/* Model count */}
-                        <div className="text-xs text-zinc-500">
-                          {moodboard.modelIds.length} models available
-                        </div>
-                      </div>
-                    </Card>
-                  </Link>
-                ) : (
-                  <Card className="group overflow-hidden opacity-75">
-                    {/* Moodboard Image */}
-                    <div className="relative aspect-[4/5] bg-zinc-100 overflow-hidden">
-                      <Image
-                        src={moodboard.coverImageUrl}
-                        alt={moodboard.name}
-                        fill
-                        className="object-cover"
+            {filteredMoodboards.slice(0, 30).map((moodboard, index) => {
+              const number = index + 1 < 10 ? `0${index + 1}` : index + 1;
+              if (canClickMoodboard(moodboard)) {
+                return (
+                  <motion.div
+                    key={moodboard.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                  >
+                    <Link href={`/moodboard/${moodboard.id}`}>
+                      <ShootCard
+                        imageSrc={moodboard.coverImageUrl}
+                        imageAlt={moodboard.name}
+                        number={number}
+                        title={moodboard.name}
+                        subtitle="View shoot details"
+                        available={true}
                       />
-                      
-                      {/* Booked indicator */}
-                      <div className="absolute top-3 right-3 bg-red-500 text-white text-xs px-2 py-1 rounded-full font-medium">
-                        Booked
-                      </div>
-                      
-                      {/* Main/Similar indicator */}
-                      <div className="absolute top-3 left-3">
-                        <Badge variant={moodboard.is_main_moodboard ? "default" : "secondary"} className="text-xs">
-                          {moodboard.is_main_moodboard ? "Main" : "Similar"}
-                        </Badge>
-                      </div>
-                      
-                      {/* Date Badge */}
-                      <div className="absolute bottom-3 left-3">
-                        <Badge variant="outline" className="text-xs bg-white/90">
-                          {format(new Date(moodboard.date), 'MMM d')}
-                        </Badge>
-                      </div>
-                    </div>
-                    
-                    {/* Moodboard Details */}
-                    <div className="p-4">
-                      <h3 className="font-bold text-lg mb-2">
-                        {moodboard.name}
-                      </h3>
-                      
-                      {/* Description */}
-                      <p className="text-sm text-zinc-600 mb-3 line-clamp-2">
-                        {moodboard.description}
-                      </p>
-                      
-                      {/* Tags */}
-                      <div className="flex flex-wrap gap-1 mb-3">
-                        {moodboard.themeTags.slice(0, 3).map((tag, i) => (
-                          <Badge key={i} variant="secondary" className="text-xs">
-                            {tag}
-                          </Badge>
-                        ))}
-                        {moodboard.themeTags.length > 3 && (
-                          <Badge variant="outline" className="text-xs">
-                            +{moodboard.themeTags.length - 3}
-                          </Badge>
-                        )}
-                      </div>
-                      
-                      {/* Model count */}
-                      <div className="text-xs text-zinc-500">
-                        {moodboard.modelIds.length} models available
-                      </div>
-                    </div>
-                  </Card>
-                )}
-              </motion.div>
-            ))}
+                    </Link>
+                  </motion.div>
+                );
+              } else {
+                return (
+                  <motion.div
+                    key={moodboard.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.05 }}
+                  >
+                    <ShootCard
+                      imageSrc={moodboard.coverImageUrl}
+                      imageAlt={moodboard.name}
+                      number={number}
+                      title={moodboard.name}
+                      subtitle="View shoot details"
+                      opacity
+                      available={false}
+                    />
+                  </motion.div>
+                );
+              }
+            })}
           </motion.div>
 
           {/* Empty State */}
@@ -399,7 +341,7 @@ export default function DiscoverPage() {
           )}
 
           {/* CTA Section */}
-          <section className="mt-20 py-16 px-8 bg-black text-white rounded-xl text-center">
+          <section className="mt-20 py-16 px-8 bg-black text-white  text-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -424,4 +366,4 @@ export default function DiscoverPage() {
       </div>
     </>
   )
-} 
+}

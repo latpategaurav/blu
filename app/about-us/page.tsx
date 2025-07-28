@@ -8,8 +8,8 @@
 
 import { motion } from 'framer-motion'
 import { ArrowUpRight } from 'lucide-react'
-import { Navbar } from '@/components/navbar'
 import { Button } from '@/components/ui/button'
+
 
 /**
  * About Us page component
@@ -22,7 +22,6 @@ import { Button } from '@/components/ui/button'
 export default function AboutUsPage() {
   return (
     <>
-      <Navbar />
       
       <div className="min-h-screen bg-slate-50">
         {/* BluStudio Section */}

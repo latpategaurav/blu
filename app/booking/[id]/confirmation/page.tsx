@@ -6,25 +6,33 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { CheckCircle, Calendar, MapPin, Clock } from 'lucide-react'
 
-export default function BookingConfirmationPage({ params }: { params: { id: string } }) {
+export default function BookingConfirmationPage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter()
   const [booking, setBooking] = useState<any>(null)
   const [loading, setLoading] = useState(true)
+  const [bookingId, setBookingId] = useState<string>('')
 
   useEffect(() => {
-    // Simulate loading booking data
-    setTimeout(() => {
-      setBooking({
-        id: params.id,
-        date: '2025-07-15',
-        time: '10:00 AM',
-        location: 'Studio A, Mumbai',
-        duration: '4 hours',
-        status: 'confirmed'
-      })
-      setLoading(false)
-    }, 1000)
-  }, [params.id])
+    const getParams = async () => {
+      const resolvedParams = await params
+      setBookingId(resolvedParams.id)
+      
+      // Simulate loading booking data
+      setTimeout(() => {
+        setBooking({
+          id: resolvedParams.id,
+          date: '2025-07-15',
+          time: '10:00 AM',
+          location: 'Studio A, Mumbai',
+          duration: '4 hours',
+          status: 'confirmed'
+        })
+        setLoading(false)
+      }, 1000)
+    }
+    
+    getParams()
+  }, [params])
 
   if (loading) {
     return (

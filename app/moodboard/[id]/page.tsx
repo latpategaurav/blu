@@ -27,7 +27,7 @@ import {
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Navbar } from '@/components/navbar'
+// import { Navbar } from '@/components/navbar'
 import { createClient } from '@/lib/supabase/client'
 import type { Moodboard, Model } from '@/types/database'
 import { format } from 'date-fns'
@@ -120,7 +120,7 @@ export default function DetailedMoodboardPage() {
   if (loading) {
     return (
       <>
-        <Navbar />
+        {/* <Navbar /> */}
         <div className="min-h-screen bg-white flex items-center justify-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black"></div>
         </div>
@@ -131,7 +131,7 @@ export default function DetailedMoodboardPage() {
   if (error || !moodboard) {
     return (
       <>
-        <Navbar />
+        {/* <Navbar /> */}
         <div className="min-h-screen bg-white flex items-center justify-center">
           <div className="text-center">
             <h1 className="text-2xl font-bold mb-4">Moodboard not found</h1>
@@ -157,7 +157,7 @@ export default function DetailedMoodboardPage() {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="min-h-screen bg-white">
         <div className="flex flex-col items-center">
           

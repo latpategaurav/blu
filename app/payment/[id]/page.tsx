@@ -14,7 +14,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
-import { Navbar } from '@/components/navbar'
+// import { Navbar } from '@/components/navbar'
 import { createClient } from '@/lib/supabase/client'
 import toast from 'react-hot-toast'
 
@@ -227,7 +227,7 @@ export default function PaymentPage() {
   if (loading) {
     return (
       <>
-        <Navbar />
+        {/* <Navbar /> */}
         <div className="min-h-screen pt-20 px-6 flex items-center justify-center">
           <div className="text-center">
             <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4" />
@@ -241,7 +241,7 @@ export default function PaymentPage() {
   if (!booking || !customer) {
     return (
       <>
-        <Navbar />
+        {/* <Navbar /> */}
         <div className="min-h-screen pt-20 px-6 flex items-center justify-center">
           <div className="text-center">
             <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
@@ -258,7 +258,7 @@ export default function PaymentPage() {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       
       <div className="min-h-screen pt-20 px-6 pb-12">
         <div className="max-w-4xl mx-auto">

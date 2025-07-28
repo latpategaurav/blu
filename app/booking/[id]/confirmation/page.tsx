@@ -1,88 +1,90 @@
 'use client'
 
-import { useEffect, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
-import { Navbar } from '@/components/navbar';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { CheckCircle } from 'lucide-react';
-import { createClient } from '@/lib/supabase/client';
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
+import { CheckCircle, Calendar, MapPin, Clock } from 'lucide-react'
 
-export default function BookingConfirmationPage() {
-  const params = useParams();
-  const router = useRouter();
-  const bookingId = params.id as string;
-  const [booking, setBooking] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+export default function BookingConfirmationPage({ params }: { params: { id: string } }) {
+  const router = useRouter()
+  const [booking, setBooking] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const fetchBooking = async () => {
-      const supabase = createClient();
-      const { data, error } = await supabase
-        .from('bookings')
-        .select(`*, moodboard:moodboards(title), model:models(name)`) 
-        .eq('id', bookingId)
-        .single();
-      if (!error && data) {
-        setBooking(data);
-      }
-      setLoading(false);
-    };
-    fetchBooking();
-  }, [bookingId]);
+    // Simulate loading booking data
+    setTimeout(() => {
+      setBooking({
+        id: params.id,
+        date: '2025-07-15',
+        time: '10:00 AM',
+        location: 'Studio A, Mumbai',
+        duration: '4 hours',
+        status: 'confirmed'
+      })
+      setLoading(false)
+    }, 1000)
+  }, [params.id])
 
   if (loading) {
     return (
-      <>
-        <Navbar />
-        <div className="min-h-screen flex items-center justify-center">
-          <div>Loading booking details...</div>
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading booking details...</p>
         </div>
-      </>
-    );
-  }
-
-  if (!booking) {
-    return (
-      <>
-        <Navbar />
-        <div className="min-h-screen flex items-center justify-center">
-          <div>Booking not found.</div>
-        </div>
-      </>
-    );
+      </div>
+    )
   }
 
   return (
-    <>
-      <Navbar />
-      <div className="min-h-screen flex items-center justify-center py-12 px-4">
-        <Card className="max-w-xl w-full">
-          <CardHeader className="flex flex-col items-center">
-            <CheckCircle className="w-16 h-16 text-green-600 mb-4" />
-            <CardTitle className="text-3xl text-center">Booking Confirmed!</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="text-center text-lg text-green-700 font-semibold">
-              Thank you for your payment. Your booking is confirmed.
+    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-2xl mx-auto">
+        <div className="text-center mb-8">
+          <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Booking Confirmed!</h1>
+          <p className="text-lg text-gray-600">Your photography session has been successfully booked.</p>
+        </div>
+
+        <Card className="mb-8">
+          <CardContent className="p-6">
+            <div className="space-y-4">
+              <div className="flex items-center gap-3">
+                <Calendar className="w-5 h-5 text-gray-500" />
+                <span className="text-gray-700">Date: {booking?.date}</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <Clock className="w-5 h-5 text-gray-500" />
+                <span className="text-gray-700">Time: {booking?.time}</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <MapPin className="w-5 h-5 text-gray-500" />
+                <span className="text-gray-700">Location: {booking?.location}</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <Clock className="w-5 h-5 text-gray-500" />
+                <span className="text-gray-700">Duration: {booking?.duration}</span>
+              </div>
             </div>
-            <div className="bg-slate-50 rounded-lg p-4">
-              <div className="font-semibold mb-2">Booking Summary</div>
-              <div><strong>Moodboard:</strong> {booking.moodboard?.title || 'N/A'}</div>
-              <div><strong>Model:</strong> {booking.model?.name || 'N/A'}</div>
-              <div><strong>Booking Date:</strong> {new Date(booking.booking_date).toLocaleDateString()}</div>
-              <div><strong>Product Count:</strong> {booking.product_count}</div>
-              <div><strong>Total Amount:</strong> ₹{booking.total_amount?.toLocaleString()}</div>
-              <div><strong>Deposit Paid:</strong> ₹{booking.deposit_amount?.toLocaleString()}</div>
-            </div>
-            <div className="text-center text-zinc-700">
-              A confirmation email with your booking details has been sent.<br />
-              We look forward to seeing you at Space Called Blu!
-            </div>
-            <Button className="w-full mt-4" onClick={() => router.push('/')}>Back to Home</Button>
           </CardContent>
         </Card>
+
+        <div className="text-center space-y-4">
+          <Button 
+            onClick={() => router.push('/calendar')}
+            className="w-full"
+          >
+            View Calendar
+          </Button>
+          <Button 
+            variant="outline"
+            onClick={() => router.push('/')}
+            className="w-full"
+          >
+            Back to Home
+          </Button>
+        </div>
       </div>
-    </>
-  );
+    </div>
+  )
 } 
